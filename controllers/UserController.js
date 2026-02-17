@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const errorMessages = require('../utils/errorMessages');
+const utilMessages = require('../utils/utilMessages');
 const httpStatus = require('../utils/httpStatus');
 
 class UserController{
@@ -7,7 +7,7 @@ class UserController{
       const users = await User.findAll();
       res.status(httpStatus.OK).json({
           success: true,
-          message: "Usuários consultados com sucesso.",
+          message: "Usuário consultados com sucesso.",
           data: [...users]
         });
     }
@@ -16,19 +16,19 @@ class UserController{
       if(!id){
         return res.status(httpStatus.NOT_FOUND).json({
           success: false,
-          message: errorMessages.AUTH.MISSING_ID,
+          message: utilMessages.AUTH.MISSING_ID,
         })
       } else {
         const user = await User.findById(id)
         if(!user){
           return res.status(httpStatus.NOT_FOUND).json({
             success: false,
-            message: errorMessages.USER.NOT_FOUND,
+            message: utilMessages.USER.NOT_FOUND,
           })
         } else {
           res.status(httpStatus.OK).json({
             success: true,
-            message: "Usuários consultado com sucesso.",
+            message: "Usuário consultado com sucesso.",
             data: user,
           });
         }
@@ -39,13 +39,31 @@ class UserController{
         const {name, email, password}  = req.body;
         const emailExists = await User.findEmail(email);
         if (emailExists) {
-          return res.status(httpStatus.CONFLICT).json({ success: false, message: errorMessages.USER.EMAIL_ALREADY_EXISTS });
+          return res.status(httpStatus.CONFLICT).json({ success: false, message: utilMessages.USER.EMAIL_ALREADY_EXISTS });
         }
         await User.createUser(name, email, password)
         res.status(httpStatus.CREATED).json({
           success: true,
           message: "Usuário criado com sucesso."
         });
+    }
+    async edit(req, res){
+      const {id, name, email, role} = req.body;
+      const result = await User.update(id, name, email, role);
+      if(result){
+        const {success, message, http} = result;
+        if(result.success){
+          res.status(http).json({
+            success,
+            message
+          })
+        } else {
+          res.status(http).json({
+            success,
+            message
+          })
+        }
+      }
     }
 }
 
