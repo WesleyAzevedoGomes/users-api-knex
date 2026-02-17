@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const utilMessages = require('../utils/utilMessages');
 const httpStatus = require('../utils/httpStatus');
+const PasswordToken = require('../models/PasswordToken');
 
 class UserController{
     async index(req, res){
@@ -86,6 +87,23 @@ class UserController{
             message
           })
         }
+      }
+    }
+    async recoverPassword(req, res){
+      const email = req.body.email;
+      const result = await PasswordToken.create(email)
+      const {success, message, token, http} = result;
+      if(success){
+        return res.status(http).json({
+          success,
+          message,
+          token: token
+        })
+      } else {
+        return res.status(http).json({
+          success,
+          message
+        })
       }
     }
 }

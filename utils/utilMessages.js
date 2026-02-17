@@ -14,7 +14,8 @@ module.exports = {
 
   SUCCESS: {
     USER_UPDATED: 'Usuário editado com sucesso',
-    USER_CREATED: 'Usuário criado com sucesso'
+    USER_CREATED: 'Usuário criado com sucesso',
+    TOKEN_SEND: 'O token foi enviado com sucesso.'
   },
 
   DEFAULT: {
