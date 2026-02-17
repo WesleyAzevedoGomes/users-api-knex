@@ -79,6 +79,20 @@ class User{
             return { success: false, message: utilMessages.DEFAULT.INTERNAL_ERROR, http: httpStatus.INTERNAL_SERVER_ERROR }
         }
     }
+    async delete(id){
+        const user = await this.findById(id)
+        if(user){
+            try {
+                await knex.delete().where({id: id}).table('users')
+                return { success: true, message: utilMessages.SUCCESS.USER_UPDATED, http: httpStatus.OK}
+            } catch(err){
+                console.log(err)
+                return { success: false, message: utilMessages.DEFAULT.INTERNAL_ERROR, http: httpStatus.INTERNAL_SERVER_ERROR }
+            }
+        } else {
+            return { success: false, message: utilMessages.USER.NOT_FOUND, http: httpStatus.NOT_FOUND }
+        }
+    }
 }
 
 module.exports = new User();
