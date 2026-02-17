@@ -41,10 +41,15 @@ class UserController{
         if (emailExists) {
           return res.status(httpStatus.CONFLICT).json({ success: false, message: utilMessages.USER.EMAIL_ALREADY_EXISTS });
         }
-        await User.createUser(name, email, password)
+        const idUser = await User.createUser(name, email, password)
         res.status(httpStatus.CREATED).json({
           success: true,
-          message: "Usuário criado com sucesso."
+          message: utilMessages.SUCCESS.USER_CREATED,
+          data: {
+            id: idUser[0],
+            name,
+            email
+          }
         });
     }
     async edit(req, res){

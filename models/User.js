@@ -31,7 +31,8 @@ class User{
     async createUser(name, email, password){
         try {
             const hash = await bcrypt.hash(password, 10)
-            await knex.insert({name, email, password: hash, role: 0}).table('users')
+            const user = await knex.insert({name, email, password: hash, role: 0}).table('users')
+            return user
         } catch(err){
             console.log(err.sqlMessage)
         }
