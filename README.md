@@ -24,10 +24,8 @@ Projeto desenvolvido com foco em segurança, organização de arquitetura e inte
 Estrutura organizada por separação de responsabilidades:
 
 - Controllers → Camada de entrada (req / res)
-- Services → Regras de negócio
 - Database → Configuração do Knex e queries
 - Middlewares → Autenticação e autorização
-- Constants → Padronização de mensagens
 - Utils → Funções auxiliares
 
 ---
