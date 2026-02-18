@@ -41,12 +41,12 @@ class UserController{
     }
 
     async create(req, res){
-        const {name, email, password}  = req.body;
+        const {name, email, password, role}  = req.body;
         const emailExists = await User.findEmail(email);
         if (emailExists) {
           return res.status(httpStatus.CONFLICT).json({ success: false, message: utilMessages.USER.EMAIL_ALREADY_EXISTS });
         }
-        const idUser = await User.createUser(name, email, password)
+        const idUser = await User.createUser(name, email, password, role)
         res.status(httpStatus.CREATED).json({
           success: true,
           message: utilMessages.SUCCESS.USER_CREATED,
