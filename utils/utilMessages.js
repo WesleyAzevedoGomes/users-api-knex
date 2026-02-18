@@ -5,7 +5,10 @@ module.exports = {
     MISSING_NAME: 'Nome do usuario é obrigatorio',
     MISSING_ID: 'ID do usuario é obrigatorio',
     INVALID_CREDENTIALS: 'E-mail ou senha inválidos',
-    TOKEN_ALREADY_USED: 'Este token já foi utilizado ou está expirado'
+    TOKEN_ALREADY_USED: 'Este token já foi utilizado ou está expirado',
+    UNAUTHORIZED: 'Usuário não autenticado',
+    INVALID_TOKEN: 'Token inválido.',
+    FORBIDDEN: 'Usuário não possui permissão para acessar este recurso'
   },
 
   USER: {

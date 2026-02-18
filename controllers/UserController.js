@@ -133,10 +133,12 @@ class UserController{
       if(user) {
         const result = await bcrypt.compare(password, user.password);
         if(result){
-          const token = jwt.sign({email: user.email, role: user.role}, process.env.SECRET_JWT)
+          const expiresIn = 60 * 60 * 2;
+          const token = jwt.sign({email: user.email, role: user.role}, process.env.SECRET_JWT, { expiresIn })
           res.status(httpStatus.OK).json({
             success: result, 
-            access_token: token
+            access_token: token,
+            expiresIn
           })
         } else {
           res.status(httpStatus.UNAUTHORIZED).json({
