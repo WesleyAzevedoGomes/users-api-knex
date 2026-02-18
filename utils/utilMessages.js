@@ -10,7 +10,8 @@ module.exports = {
 
   USER: {
     NOT_FOUND: 'Usuário não encontrado',
-    EMAIL_ALREADY_EXISTS: 'Este e-mail já está cadastrado'
+    EMAIL_ALREADY_EXISTS: 'Este e-mail já está cadastrado',
+    WRONG_PASSWORD: 'A senha está incorreta.'
   },
 
   SUCCESS: {

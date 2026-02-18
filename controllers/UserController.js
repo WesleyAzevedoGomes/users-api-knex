@@ -2,6 +2,10 @@ const User = require('../models/User');
 const utilMessages = require('../utils/utilMessages');
 const httpStatus = require('../utils/httpStatus');
 const PasswordToken = require('../models/PasswordToken');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+require('dotenv').config()
+
 
 class UserController{
     async index(req, res){
@@ -120,6 +124,30 @@ class UserController{
         res.status(http).json({
           success,
           message
+        })
+      }
+    }
+    async login(req, res){
+      const {email, password} = req.body;
+      const user = await User.findByEmail(email);
+      if(user) {
+        const result = await bcrypt.compare(password, user.password);
+        if(result){
+          const token = jwt.sign({email: user.email, role: user.role}, process.env.SECRET_JWT)
+          res.status(httpStatus.OK).json({
+            success: result, 
+            access_token: token
+          })
+        } else {
+          res.status(httpStatus.UNAUTHORIZED).json({
+          success: false,
+          message: utilMessages.USER.WRONG_PASSWORD
+        })
+        }
+      } else {
+        res.status(httpStatus.NOT_FOUND).json({
+          success: false,
+          message: utilMessages.USER.NOT_FOUND
         })
       }
     }
