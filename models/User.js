@@ -44,7 +44,7 @@ class User{
     async createUser(name, email, password, role){
         try {
             let roleInformation;
-            roleInformation ? role = 1 : role = 0
+            role ? roleInformation = 1 : roleInformation = 0
             const hash = await bcrypt.hash(password, 10)
             const user = await knex.insert({name, email, password: hash, role: roleInformation}).table('users')
             return user
