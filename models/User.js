@@ -107,6 +107,17 @@ class User{
             return { success: false, message: utilMessages.USER.NOT_FOUND, http: httpStatus.NOT_FOUND }
         }
     }
+    async changePassword(newPassword, id, token){
+        const hash = await bcrypt.hash(newPassword, 10)
+        try {
+            await knex.transaction(async trx => {
+            await trx('users').where({id: id}).update({password: hash})
+            await trx('passwordTokens').where({user_id: id, token: token}).update({used: 1})
+            })
+        } catch(err){
+            console.log(err)
+        } 
+    }
 }
 
 module.exports = new User();

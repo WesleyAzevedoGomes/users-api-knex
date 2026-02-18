@@ -4,7 +4,8 @@ module.exports = {
     MISSING_PASSWORD: 'Senha é obrigatória',
     MISSING_NAME: 'Nome do usuario é obrigatorio',
     MISSING_ID: 'ID do usuario é obrigatorio',
-    INVALID_CREDENTIALS: 'E-mail ou senha inválidos'
+    INVALID_CREDENTIALS: 'E-mail ou senha inválidos',
+    TOKEN_ALREADY_USED: 'Este token já foi utilizado ou está expirado'
   },
 
   USER: {
@@ -15,7 +16,8 @@ module.exports = {
   SUCCESS: {
     USER_UPDATED: 'Usuário editado com sucesso',
     USER_CREATED: 'Usuário criado com sucesso',
-    TOKEN_SEND: 'O token foi enviado com sucesso.'
+    TOKEN_SEND: 'O token foi enviado com sucesso.',
+    USER_UPDATED_PASSWORD: 'Senha alterada.'
   },
 
   DEFAULT: {

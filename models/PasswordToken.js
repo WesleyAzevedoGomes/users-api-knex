@@ -21,6 +21,24 @@ class PasswordToken{
             return { success: false, message: utilMessages.USER.NOT_FOUND, http: httpStatus.NOT_FOUND }
         }
     }
+    async validate(token){
+        try {
+            const result = await knex.select().where({token: token}).table('passwordTokens').first();
+            if(result){
+                const tk = result
+                if(tk.used){
+                    return {success: false, message: utilMessages.AUTH.TOKEN_ALREADY_USED, token: tk, http: httpStatus.BAD_REQUEST }
+                } else {
+                    return {success: true, message: utilMessages.SUCCESS.USER_UPDATED_PASSWORD, token: tk, http: httpStatus.OK }
+                }
+            } else {
+                return { success: false, message: utilMessages.USER.NOT_FOUND, token: tk, http: httpStatus.NOT_FOUND }
+            }
+        } catch(err){
+            console.log(err)
+            return false;
+        }
+    }
 }
 
 module.exports = new PasswordToken();
